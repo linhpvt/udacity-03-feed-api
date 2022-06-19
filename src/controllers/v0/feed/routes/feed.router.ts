@@ -4,7 +4,6 @@ import { requireAuth } from '../../../../middleware/authentication'
 import * as AWS from '../../../../aws'
 import { sendResponse, setUpdateFields } from '../../../../helpers'
 import { getFieldsChanges } from '../../../../helpers/index'
-import { config } from '../../../../config/config'
 
 const router: Router = Router()
 
@@ -99,10 +98,5 @@ router.post('/',
     saved_item.url = AWS.getGetSignedUrl(saved_item.url);
 		sendResponse(res, saved_item, 201)
 });
-
-router.get('/health/check/config/all', async (_, res: Response) => {    
-  res.send(config);
-});
-
 
 export const FeedRouter: Router = router;

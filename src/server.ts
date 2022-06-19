@@ -1,11 +1,9 @@
 import express from 'express';
 import { sequelize } from './sequelize';
-
 import { FeedRouter } from './controllers/v0/feed/routes/feed.router';
-
 import bodyParser from 'body-parser';
-
 import { V0MODELS } from './controllers/v0/model.index';
+import { config } from './config/config';
 
 (async () => {
   // set up relationship between models and tables
@@ -20,14 +18,14 @@ import { V0MODELS } from './controllers/v0/model.index';
 
   // CORS Should be restricted
   app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    // res.header("Access-Control-Allow-Origin", process.env.URL);
+    // res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Origin", config.dev.url);
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
     res.header("Access-Control-Allow-Methods", "*");
     next();
   });
 
-  app.use('/', FeedRouter)
+  app.use(FeedRouter)
 
   // Start the Server
   app.listen( port, () => {

@@ -4,7 +4,7 @@ import { config } from './config/config';
 const c = config.dev;
 
 //Configure AWS
-if(c.aws_profile !== "DEPLOYED") {
+if(c.aws_profile !== 'DEPLOYED') {
   AWS.config.credentials = new AWS.SharedIniFileCredentials({profile: c.aws_profile});
 } else {
   AWS.config.credentials = new AWS.Credentials({
@@ -18,7 +18,6 @@ export const s3 = new AWS.S3({
   region: c.aws_region,
   params: {Bucket: c.aws_media_bucket}
 });
-
 
 /* getGetSignedUrl generates an aws signed url to retreive an item
  * @Params
