@@ -1,0 +1,27 @@
+language: node_js
+node_js:
+  - 12
+
+services:
+  - docker
+
+# Pre-testing installs
+install:
+  - echo "nothing needs to be installed"
+
+# Scripts to be run such as tests
+before_script:
+  - echo "no tests"
+
+script:
+  - docker --version # print the version for logging
+  # docker image named as udagram-api-feed for the current project .
+  - docker build -t udagram-api-feed .
+  # tag the image called udagram-api-feed to linhpvt/udagram-api-feed:latest
+  - docker tag udagram-api-feed linhpvt/udagram-api-feed:latest
+after_success:
+  # login to docker hub
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  # push tagged image to docker hub
+  - docker push linhpvt/udagram-api-feed
+  
